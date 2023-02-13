@@ -1,0 +1,46 @@
+{% extends 'driver/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-12 text-center mt-3">
+            <h1>Service ID: {{ service.pk }}</h1>
+        </div>
+    </div>
+    <div class="row justify-contnet-center">
+        <div class="col-md-12 col-sm-12 mt-5">
+            <h3>Customer Information</h3>
+        </div>
+    </div>
+
+    <div class="row justify-contnet-center">
+        <div class="col-md-6 col-sm-12 mt-5">
+            <p><span style="font-weight: 400;">Name</span> {{ service.name }}</p>
+            <p><span style="font-weight: 400;">Email</span> {{ service.email }}</p>
+            <h5 class="pt-3">Address Information</h5>
+            <p><span style="font-weight: 400;">Town</span> {{ service.town }}</p>
+            <p><span style="font-weight: 400;">County</span> {{ service.county }}</p>
+            <p><span style="font-weight: 400;">Number</span> {{ service.number }}</p>
+            <p><span style="font-weight: 400;"></span> {{ service.name }}</p>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <h5>Payment and Shipping Information</h5>
+            <p class="mt-3">{% if service.is_paid %}
+                <p><i style="color: green;" class="fas fa-check"></i><span class="pl-2">Service has been paid</span></p>
+                {% else %}
+                <p><i style="color: red;" class="fas fa-time"></i><span class="pl-2">Service has not been paid</span></p>
+                {% endif %}
+            </p>
+            {% if service.is_shipped %}
+                <p><i style="color: green;" class="fas fa-check"></i><span class="pl-2">Cargo Has Been Shipped!</span></p>
+                {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success">Mark as Declined</button>
+                </form>
+                {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
